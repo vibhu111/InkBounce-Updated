@@ -22,6 +22,7 @@
 		D2F316E51E36BD600091CDD4 /* costume3.png in Resources */ = {isa = PBXBuildFile; fileRef = D2F316E01E36BD600091CDD4 /* costume3.png */; };
 		D2F316E61E36BD600091CDD4 /* costume2.png in Resources */ = {isa = PBXBuildFile; fileRef = D2F316E11E36BD600091CDD4 /* costume2.png */; };
 		D2F316E71E36BD600091CDD4 /* costume1.png in Resources */ = {isa = PBXBuildFile; fileRef = D2F316E21E36BD600091CDD4 /* costume1.png */; };
+		D2F316E91E36BFAD0091CDD4 /* costume6.png in Resources */ = {isa = PBXBuildFile; fileRef = D2F316E81E36BFAD0091CDD4 /* costume6.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		D2F316E01E36BD600091CDD4 /* costume3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = costume3.png; sourceTree = "<group>"; };
 		D2F316E11E36BD600091CDD4 /* costume2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = costume2.png; sourceTree = "<group>"; };
 		D2F316E21E36BD600091CDD4 /* costume1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = costume1.png; sourceTree = "<group>"; };
+		D2F316E81E36BFAD0091CDD4 /* costume6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = costume6.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 		D2F316D21E36BB780091CDD4 /* Image Assets */ = {
 			isa = PBXGroup;
 			children = (
+				D2F316E81E36BFAD0091CDD4 /* costume6.png */,
 				D2F316DE1E36BD600091CDD4 /* costume5.png */,
 				D2F316DF1E36BD600091CDD4 /* costume4.png */,
 				D2F316E01E36BD600091CDD4 /* costume3.png */,
@@ -279,6 +282,7 @@
 				D2C75AD11E05D2D300E371B8 /* Main.storyboard in Resources */,
 				D2F316E71E36BD600091CDD4 /* costume1.png in Resources */,
 				D2C75AC81E05D2D300E371B8 /* GameScene.sks in Resources */,
+				D2F316E91E36BFAD0091CDD4 /* costume6.png in Resources */,
 				D2C75AD31E05D2D300E371B8 /* Assets.xcassets in Resources */,
 				D2F316E61E36BD600091CDD4 /* costume2.png in Resources */,
 				D2C75AD61E05D2D300E371B8 /* LaunchScreen.storyboard in Resources */,

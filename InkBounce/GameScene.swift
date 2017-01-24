@@ -23,15 +23,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let BorderCategory : UInt32 = 0x1 << 4
     
 //Actions and Animations
-    let fadeAction = SKAction.fadeOut(withDuration: 1.5)
+    let fadeAction = SKAction.fadeOut(withDuration: 0.8)
     let fadeInAction = SKAction.fadeIn(withDuration: 0.0)
     
+    //var for allowed line making''
+    var touchesA = false;
     
     //Create Global Variables
     var score = 0
     var timer = Timer()
     var scoreLabel = SKLabelNode()
-    var Ball = SKShapeNode(circleOfRadius: 50)
+    //var Ball = SKShapeNode(circleOfRadius: 50)
+    var Ball = SKSpriteNode();
     var ref = CGMutablePath()
     let bottom = SKShapeNode()
     var wayPoints: [CGPoint] = []
@@ -76,7 +79,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        
         
         
-       // physicsWorld.gravity = CGVector(dx: 0.0, dy: -1.5)
+        physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
         
         
         scoreLabel.fontName = "Helvetica Neue Bold"
@@ -125,28 +128,49 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         func addBall(){
         
 
-        // x coordinate between MinX (left) and MaxX (right):
-        let randomX = randomInRange(lo: Int(self.frame.minX + 15), hi: Int(self.frame.maxX - 15))
-        // y coordinate between MinY (top) and MidY (middle):
-        let randomY = randomInRange(lo: Int(self.frame.midY), hi: Int(self.frame.maxY - 15))
-        let randomPoint = CGPoint(x: randomX, y: randomY)
-        
+   
         
         Ball.name = "ball"
-        Ball.fillColor = SKColor(red: 143, green: 255, blue: 250, alpha: 1)
-        Ball.strokeColor = SKColor(red: 143, green: 255, blue: 250, alpha: 1)
-        Ball.physicsBody = SKPhysicsBody(circleOfRadius: 30)
-        Ball.position = randomPoint
-        Ball.physicsBody?.isDynamic = true
+        //if an image...
+            
+        Ball = SKSpriteNode(imageNamed: "costume6");
+        Ball.physicsBody = SKPhysicsBody()
+
         
-        //Ball.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: -2.0))
-//Ball.physicsBody?.affectedByGravity = false
+        //If it remains a shape node...
+            
+        //Ball.fillColor = SKColor(red: 143, green: 255, blue: 250, alpha: 1)
+        //Ball.strokeColor = SKColor(red: 143, green: 255, blue: 250, alpha: 1)
+            
+            
+        //Ball.physicsBody = SKPhysicsBody(circleOfRadius: 30)
+        //Ball.physicsBody?.isDynamic = true
+        
+            // x coordinate between MinX (left) and MaxX (right):
+            let randomX = randomInRange(lo: Int(self.frame.minX + 15), hi: Int(self.frame.maxX - 15))
+            // y coordinate between MinY (top) and MidY (middle):
+            let randomY = randomInRange(lo: Int(self.frame.midY), hi: Int(self.frame.maxY - 15))
+            let randomPoint = CGPoint(x: randomX, y: randomY)
+            
+            
+            while Ball.intersects(scoreLabel)
+            {
+                
+                let randomX = randomInRange(lo: Int(self.frame.minX + 15), hi: Int(self.frame.maxX - 15))
+                // y coordinate between MinY (top) and MidY (middle):
+                let randomY = randomInRange(lo: Int(self.frame.midY), hi: Int(self.frame.maxY - 15))
+                let randomPoint = CGPoint(x: randomX, y: randomY)
+                
+            }
+            
+            Ball.position = randomPoint
+
         Ball.removeFromParent()
         self.addChild(Ball)
              
-        let borderBody = SKPhysicsBody(edgeLoopFrom: self.shapeNode.frame)
-            borderBody.friction = 0
-            self.Ball.physicsBody = borderBody
+       
+            
+
         
     }
     
@@ -178,13 +202,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
       //  paddleBody.friction = 0
         bottom.physicsBody!.categoryBitMask = BottomCategory
-        Ball.physicsBody!.categoryBitMask = BallCategory
+      //  Ball.physicsBody!.categoryBitMask = BallCategory
         borderBody.categoryBitMask = BorderCategory
         shapeNode.physicsBody?.categoryBitMask = PaddleCategory
 
      
         Ball.physicsBody!.contactTestBitMask = BottomCategory
 
+       Ball.physicsBody!.applyImpulse(CGVector(dx: 20, dy: -20))
+
+        
+        touchesA = true;
         
     }
 
@@ -209,7 +237,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             print(wayPoints)
     }
-        
+     
         
         
     }
@@ -219,8 +247,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
             wayPoints.append(t.location(in: self))
         print(wayPoints)
+            //touches allowed again
+            touchesA = true;
+
         }
     }
+    
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchUp(atPoint: t.location(in: self))
@@ -296,6 +328,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.shapeNode.removeAllActions()
             self.shapeNode.removeAllChildren()
             self.shapeNode.removeFromParent()
+            self.touchesA = false;
         })
         
         
@@ -379,6 +412,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //2
             //3
+        //If touches are allowed then...
+        if touchesA == true{
+        
             if let path = self.createPathToMove() {
                 shapeNode.run(fadeInAction)
                 shapeNode.path = path
@@ -387,7 +423,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 shapeNode.lineWidth = 16
                 shapeNode.zPosition = 1
                 shapeNode.name = "line"
-                self.physicsBody = SKPhysicsBody(edgeLoopFrom: shapeNode.path!)
                 shapeNode.removeFromParent()
                 self.addChild(shapeNode)
 
@@ -399,11 +434,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
             }
         
+        }
+    
+    
     }
     
-    
 }
-    
-    
-    
 
