@@ -79,7 +79,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        
         
         
-        physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
+        //physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
         
         
         scoreLabel.fontName = "Helvetica Neue Bold"
@@ -134,7 +134,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //if an image...
             
         Ball = SKSpriteNode(imageNamed: "costume6");
-        Ball.physicsBody = SKPhysicsBody()
+            
+            
+            // 3
+            
+
+            //Ball.physicsBody = SKPhysicsBody()
 
         
         //If it remains a shape node...
@@ -162,8 +167,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let randomPoint = CGPoint(x: randomX, y: randomY)
                 
             }
-            
+            Ball.physicsBody = SKPhysicsBody(circleOfRadius: 35)
+
             Ball.position = randomPoint
+            Ball.physicsBody?.isDynamic = true
 
         Ball.removeFromParent()
         self.addChild(Ball)
@@ -209,7 +216,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
      
         Ball.physicsBody!.contactTestBitMask = BottomCategory
 
-       Ball.physicsBody!.applyImpulse(CGVector(dx: 20, dy: -20))
+        //Ball.physicsBody?.applyImpulse(CGVector(dx: 60, dy: -60))
 
         
         touchesA = true;
@@ -346,6 +353,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("Line Bounce Touch")
             //apply impulse here...
             
+            Ball.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 150.0))
 
         
         }
@@ -420,7 +428,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 shapeNode.path = path
                 shapeNode.name = "paddle"
                 shapeNode.strokeColor = SKColor .black
-                shapeNode.lineWidth = 16
+                shapeNode.lineWidth = 7
                 shapeNode.zPosition = 1
                 shapeNode.name = "line"
                 shapeNode.removeFromParent()
@@ -428,6 +436,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
                 //run Line Fade Animation
                 shapeNode.run(fadeAction)
+                
+                
+                let borderBody = SKPhysicsBody(edgeLoopFrom: self.shapeNode.frame)
+                //let paddleBody = SKPhysicsBody(edgeLoopFrom: self.shapeNode.path!)
+                // 2
+                borderBody.friction = 0
+                // 3
+                self.shapeNode.physicsBody = borderBody
+                
                 
                 
                 
