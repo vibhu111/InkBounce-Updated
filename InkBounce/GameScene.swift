@@ -7,17 +7,19 @@
 //
 
 
-
 /*What to do next...
  //if ball is touching the edges apply impulse to get it off of the edges...
  get the bounce impulse when touching the line to be more accurate, less crazy and all over the place...
  resize the line being drawen, check if it needs to be bigger....
  Consider making the line sprite/paddle an image to, and elongating it to a certain point, which would be using the point where your finger first was, and is while your finger is moving to simulate line mvoement.
-*/
+ */
 
 
 
-
+//Get spikes and pu them on the bottom and top of the screen, and use a SKimage sprite.
+//So essentially when the ball touches the top or bottom, you lose or die or whatever,
+//But the goal of the game will be now to make sure it doesnt tuche the top or the bottomn while balencing multile balls on the lines
+//or maybe if the screen will get too cramped THINK ABOUT IT, then instead what you could do is have nly spikes on the bottom, and btw think Geometry dash for color scheme....
 
 
 
@@ -46,9 +48,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     //paddle variables...
-    var lineWidth = 25;
+    var lineWidth = 15;
     
-//Actions and Animations
+    //Actions and Animations
     let fadeAction = SKAction.fadeOut(withDuration: 0.8)
     let fadeInAction = SKAction.fadeIn(withDuration: 0.0)
     
@@ -65,7 +67,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let bottom = SKShapeNode()
     var wayPoints: [CGPoint] = []
     let shapeNode = SKShapeNode()
-
+    
     var gameOver = false
     
     
@@ -73,36 +75,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         Ball.removeFromParent()
         print("Game Over")
     }
-
+    
     
     func initHud(){
         //set Scene Color
         physicsWorld.contactDelegate = self
-
+        
         //let shape = SKShapeNode()
         /*
-        let path = CGMutablePath()
-        path.move(to: CGPoint(x: frame.minX, y: frame.minY))
-        path.addLine(to: CGPoint(x: frame.maxX, y: frame.minY + 10))
-        
-        
-        bottom.path = path
-        bottom.strokeColor = SKColor .clear
-        bottom.lineWidth = 2
-        bottom.removeFromParent()
-        addChild(bottom)
-        */
-       /* shape.position = CGPoint(x: frame.midX, y: frame.midY)
-        shape.fillColor = SKColor .blue
-        shape.strokeColor = SKColor .blue
-        shape.lineWidth = 10
-        shape.removeFromParent()
-        addChild(shape)
-        */
-        self.scene?.backgroundColor = UIColor(red: 40/255.0, green: 42/255.0, blue: 54/255.0, alpha: alpha)
+         let path = CGMutablePath()
+         path.move(to: CGPoint(x: frame.minX, y: frame.minY))
+         path.addLine(to: CGPoint(x: frame.maxX, y: frame.minY + 10))
+         
+         
+         bottom.path = path
+         bottom.strokeColor = SKColor .clear
+         bottom.lineWidth = 2
+         bottom.removeFromParent()
+         addChild(bottom)
+         */
+        /* shape.position = CGPoint(x: frame.midX, y: frame.midY)
+         shape.fillColor = SKColor .blue
+         shape.strokeColor = SKColor .blue
+         shape.lineWidth = 10
+         shape.removeFromParent()
+         addChild(shape)
+         */
+        self.scene?.backgroundColor = SKColor .white
         
         gameOver = false
-       
+        
         
         
         //physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
@@ -113,7 +115,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.fontColor = SKColor .black
         
         scoreLabel.text = score.description
-
+        
         scoreLabel.position = CGPoint(x: frame.midX, y: frame.midY + 500)
         scoreLabel.removeFromParent()
         self.addChild(scoreLabel)
@@ -151,67 +153,66 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return lo + Int(arc4random_uniform(UInt32(hi - lo + 1)))
     }
     
-        func addBall(){
+    func addBall(){
         
-
-   
+        
+        
         
         Ball.name = "ball"
         //if an image...
-            
-        Ball = SKSpriteNode(imageNamed: "costume1");
-            
-            
-            // 3
-            
-
-            //Ball.physicsBody = SKPhysicsBody()
-
+        
+        Ball = SKSpriteNode(imageNamed: "costume6");
+        
+        
+        // 3
+        
+        
+        //Ball.physicsBody = SKPhysicsBody()
         
         //If it remains a shape node...
-            
+        
         //Ball.fillColor = SKColor(red: 143, green: 255, blue: 250, alpha: 1)
         //Ball.strokeColor = SKColor(red: 143, green: 255, blue: 250, alpha: 1)
-            
-            
+        
+        
         //Ball.physicsBody = SKPhysicsBody(circleOfRadius: 30)
         //Ball.physicsBody?.isDynamic = true
         
-            // x coordinate between MinX (left) and MaxX (right):
+        // x coordinate between MinX (left) and MaxX (right):
+        let randomX = randomInRange(lo: Int(self.frame.minX + 15), hi: Int(self.frame.maxX - 15))
+        // y coordinate between MinY (top) and MidY (middle):
+        let randomY = randomInRange(lo: Int(self.frame.midY), hi: Int(self.frame.maxY - 15))
+        let randomPoint = CGPoint(x: randomX, y: randomY)
+        
+        
+        while Ball.intersects(scoreLabel)
+        {
+            
             let randomX = randomInRange(lo: Int(self.frame.minX + 15), hi: Int(self.frame.maxX - 15))
             // y coordinate between MinY (top) and MidY (middle):
             let randomY = randomInRange(lo: Int(self.frame.midY), hi: Int(self.frame.maxY - 15))
             let randomPoint = CGPoint(x: randomX, y: randomY)
             
-            
-            while Ball.intersects(scoreLabel)
-            {
-                
-                let randomX = randomInRange(lo: Int(self.frame.minX + 15), hi: Int(self.frame.maxX - 15))
-                // y coordinate between MinY (top) and MidY (middle):
-                let randomY = randomInRange(lo: Int(self.frame.midY), hi: Int(self.frame.maxY - 15))
-                let randomPoint = CGPoint(x: randomX, y: randomY)
-                
-            }
-            Ball.physicsBody = SKPhysicsBody(circleOfRadius: 35)
-
-            Ball.position = randomPoint
-            Ball.physicsBody?.isDynamic = true
-
+        }
+        Ball.physicsBody = SKPhysicsBody(circleOfRadius: 35)
+        
+        Ball.position = randomPoint
+        Ball.physicsBody?.isDynamic = true
+        
         Ball.removeFromParent()
         self.addChild(Ball)
-             
-       
-            
-
+        
+        
+        
+        
         
     }
     
-
+    
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
-
+        
         
     }
     
@@ -233,25 +234,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsBody = borderBody
         
         
-      //  paddleBody.friction = 0
+        //  paddleBody.friction = 0
         bottom.physicsBody!.categoryBitMask = BottomCategory
-      //  Ball.physicsBody!.categoryBitMask = BallCategory
+        //  Ball.physicsBody!.categoryBitMask = BallCategory
         borderBody.categoryBitMask = BorderCategory
         shapeNode.physicsBody?.categoryBitMask = PaddleCategory
-
-     
+        
+        
         Ball.physicsBody!.contactTestBitMask = BottomCategory
-
+        
         //Ball.physicsBody?.applyImpulse(CGVector(dx: 60, dy: -60))
-
         
         touchesA = true;
         
     }
-
+    
     
     func touchDown(atPoint pos : CGPoint) {
-       
+        
     }
     
     func touchMoved(toPoint pos : CGPoint) {
@@ -259,39 +259,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func touchUp(atPoint pos : CGPoint) {
-       
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for t in touches { self.touchDown(atPoint: t.location(in: self))
-        
-        wayPoints.append(t.location(in: self))
+            
+            wayPoints.append(t.location(in: self))
             
             print(wayPoints)
-    }
-     
+        }
+        
         
         
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchMoved(toPoint: t.location(in: self))
-        
+            
             wayPoints.append(t.location(in: self))
-        print(wayPoints)
+            print(wayPoints)
             //touches allowed again
-
+            touchesA = true;
+            
         }
     }
     
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchUp(atPoint: t.location(in: self))
-        
-        wayPoints = []
-            touchesA = true;
-
+            
+            wayPoints = []
             
         }
     }
@@ -299,15 +298,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
-
+    
     
     /*
-    
-    
-    func touchDown(atPoint pos : CGPoint) {
-           }
-    
-    func touchMoved(toPoint pos : CGPoint) {
+     
+     
+     func touchDown(atPoint pos : CGPoint) {
+     }
+     
+     func touchMoved(toPoint pos : CGPoint) {
      for touch: AnyObject in touches {
      let locationInScene = touch.locationInNode(self)
      var line = SKShapeNode()
@@ -319,36 +318,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
      self.addChild(line)
      }
      }
-            }
-    
-    func touchUp(atPoint pos : CGPoint) {
-            }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+     }
+     
+     func touchUp(atPoint pos : CGPoint) {
+     }
+     
+     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+     
      if let touch = touches.anyObject() as? UITouch {
      let location = touch.locationInNode(self)
      CGPathMoveToPoint(ref, nil, location.x, location.y)
      }
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
-        
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    */
+     if let label = self.label {
+     label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+     }
+     
+     for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+     }
+     
+     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+     for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+     }
+     
+     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+     for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+     }
+     
+     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+     for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+     }
+     */
     
     override func update(_ currentTime: TimeInterval) {
         
@@ -367,23 +366,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         
-
         
         
-       /* if Ball.intersects(bottom) {
-            GameOver()
-        }
-       */
+        
+        /* if Ball.intersects(bottom) {
+         GameOver()
+         }
+         */
         
         
         if Ball.intersects(shapeNode){
             if self.touchesA != false{
-            print("Line Bounce Touch")
-            //apply impulse here...
-            
-            Ball.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 100.0))
-
-        
+                print("Line Bounce Touch")
+                //apply impulse here...
+                
+                Ball.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 150.0))
+                
+                
             }
         }
         // Called before each frame is rendered
@@ -406,8 +405,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         drawLines()
         
         
-           }
- 
+    }
+    
     
     
     
@@ -435,10 +434,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         return ref
-
+        
     }
-
- 
+    
+    
     
     func drawLines() {
         //1
@@ -447,10 +446,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         })
         
         //2
-            //3
+        //3
         //If touches are allowed then...
         if touchesA == true{
-        
+            
             if let path = self.createPathToMove() {
                 shapeNode.run(fadeInAction)
                 shapeNode.path = path
@@ -461,7 +460,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 shapeNode.name = "line"
                 shapeNode.removeFromParent()
                 self.addChild(shapeNode)
-
+                
                 //run Line Fade Animation
                 shapeNode.run(fadeAction)
                 
@@ -478,11 +477,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 
             }
-        
+            
         }
-    
-    
+        
+        
     }
     
 }
-
