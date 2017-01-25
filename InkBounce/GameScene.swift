@@ -46,7 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     //paddle variables...
-    var lineWidth = 10;
+    var lineWidth = 25;
     
 //Actions and Animations
     let fadeAction = SKAction.fadeOut(withDuration: 0.8)
@@ -99,7 +99,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         shape.removeFromParent()
         addChild(shape)
         */
-        self.scene?.backgroundColor = SKColor .white
+        self.scene?.backgroundColor = UIColor(red: 40/255.0, green: 42/255.0, blue: 54/255.0, alpha: alpha)
         
         gameOver = false
        
@@ -159,7 +159,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         Ball.name = "ball"
         //if an image...
             
-        Ball = SKSpriteNode(imageNamed: "costume6");
+        Ball = SKSpriteNode(imageNamed: "costume1");
             
             
             // 3
@@ -281,7 +281,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             wayPoints.append(t.location(in: self))
         print(wayPoints)
             //touches allowed again
-            touchesA = true;
 
         }
     }
@@ -291,6 +290,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for t in touches { self.touchUp(atPoint: t.location(in: self))
         
         wayPoints = []
+            touchesA = true;
+
             
         }
     }
@@ -380,7 +381,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("Line Bounce Touch")
             //apply impulse here...
             
-            Ball.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 150.0))
+            Ball.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 100.0))
 
         
             }
