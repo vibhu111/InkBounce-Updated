@@ -7,6 +7,7 @@
 //
 
 
+
 /*What to do next...
  //if ball is touching the edges apply impulse to get it off of the edges...
  get the bounce impulse when touching the line to be more accurate, less crazy and all over the place...
@@ -15,15 +16,8 @@
  */
 
 
-//Get spikes and pu them on the bottom and top of the screen, and use a SKimage sprite.
-//So essentially when the ball touches the top or bottom, you lose or die or whatever,
-//But the goal of the game will be now to make sure it doesnt tuche the top or the bottomn while balencing multile balls on the lines
-//or maybe if the screen will get too cramped THINK ABOUT IT, then instead what you could do is have nly spikes on the bottom, and btw think Geometry dash for color scheme....
 
-//Get spikes and pu them on the bottom and top of the screen, and use a SKimage sprite.
-//So essentially when the ball touches the top or bottom, you lose or die or whatever,
-//But the goal of the game will be now to make sure it doesnt tuche the top or the bottomn while balencing multile balls on the lines
-//or maybe if the screen will get too cramped THINK ABOUT IT, then instead what you could do is have nly spikes on the bottom, and btw think Geometry dash for color scheme....
+
 
 
 
@@ -52,7 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     //paddle variables...
-    var lineWidth = 15;
+    var lineWidth = 25;
     
     //Actions and Animations
     let fadeAction = SKAction.fadeOut(withDuration: 0.8)
@@ -105,7 +99,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
          shape.removeFromParent()
          addChild(shape)
          */
-        self.scene?.backgroundColor = SKColor .white
+        self.scene?.backgroundColor = UIColor(red: 40/255.0, green: 42/255.0, blue: 54/255.0, alpha: alpha)
         
         gameOver = false
         
@@ -165,13 +159,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         Ball.name = "ball"
         //if an image...
         
-        Ball = SKSpriteNode(imageNamed: "costume6");
+        Ball = SKSpriteNode(imageNamed: "costume1");
         
         
         // 3
         
         
         //Ball.physicsBody = SKPhysicsBody()
+        
         
         //If it remains a shape node...
         
@@ -249,6 +244,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //Ball.physicsBody?.applyImpulse(CGVector(dx: 60, dy: -60))
         
+        
         touchesA = true;
         
     }
@@ -285,7 +281,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             wayPoints.append(t.location(in: self))
             print(wayPoints)
             //touches allowed again
-            touchesA = true;
             
         }
     }
@@ -295,6 +290,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for t in touches { self.touchUp(atPoint: t.location(in: self))
             
             wayPoints = []
+            touchesA = true;
+            
             
         }
     }
@@ -384,7 +381,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 print("Line Bounce Touch")
                 //apply impulse here...
                 
-                Ball.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 150.0))
+                Ball.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 100.0))
                 
                 
             }
@@ -488,3 +485,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
 }
+
+
