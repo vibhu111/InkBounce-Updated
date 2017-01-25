@@ -6,6 +6,28 @@
 //  Copyright © 2016 Vibhu Gandikota. All rights reserved.
 //
 
+
+
+/*What to do next...
+ //if ball is touching the edges apply impulse to get it off of the edges...
+ get the bounce impulse when touching the line to be more accurate, less crazy and all over the place...
+ resize the line being drawen, check if it needs to be bigger....
+ Consider making the line sprite/paddle an image to, and elongating it to a certain point, which would be using the point where your finger first was, and is while your finger is moving to simulate line mvoement.
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import SpriteKit
 import GameplayKit
 
@@ -21,6 +43,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let BlockCategory  : UInt32 = 0x1 << 2
     let PaddleCategory : UInt32 = 0x1 << 3
     let BorderCategory : UInt32 = 0x1 << 4
+    
+    
+    //paddle variables...
+    var lineWidth = 10;
     
 //Actions and Animations
     let fadeAction = SKAction.fadeOut(withDuration: 0.8)
@@ -348,16 +374,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
        */
         
-        if Ball.intersects(shapeNode){
         
+        if Ball.intersects(shapeNode){
+            if self.touchesA != false{
             print("Line Bounce Touch")
             //apply impulse here...
             
             Ball.physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 150.0))
 
         
+            }
         }
-        
         // Called before each frame is rendered
         
         // Initialize _lastUpdateTime if it has not already been
@@ -428,7 +455,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 shapeNode.path = path
                 shapeNode.name = "paddle"
                 shapeNode.strokeColor = SKColor .black
-                shapeNode.lineWidth = 7
+                shapeNode.lineWidth = CGFloat(lineWidth)
                 shapeNode.zPosition = 1
                 shapeNode.name = "line"
                 shapeNode.removeFromParent()
