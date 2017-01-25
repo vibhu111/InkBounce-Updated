@@ -15,6 +15,10 @@
  */
 
 
+//Get spikes and pu them on the bottom and top of the screen, and use a SKimage sprite.
+//So essentially when the ball touches the top or bottom, you lose or die or whatever,
+//But the goal of the game will be now to make sure it doesnt tuche the top or the bottomn while balencing multile balls on the lines
+//or maybe if the screen will get too cramped THINK ABOUT IT, then instead what you could do is have nly spikes on the bottom, and btw think Geometry dash for color scheme....
 
 //Get spikes and pu them on the bottom and top of the screen, and use a SKimage sprite.
 //So essentially when the ball touches the top or bottom, you lose or die or whatever,
